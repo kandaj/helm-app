@@ -14,10 +14,12 @@ serviceAccount:
   name: ""
 
 ingress:
-  enabled: false
-  hostname: frontend.local
-  annotations: {}
-  tls: []
+  enabled: true
+  hostname: frontend-app.local
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  tls: false
+  tlsSecret: "" # If TLS is enabled, specify the secret name
 
 autoscaling:
   enabled: false
