@@ -6,9 +6,10 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: LoadBalancer # Can be LoadBalancer, NodePort, or ClusterIP
-  port: 80 # External port for the service
-  targetPort: 80
+  type: NodePort # Change to NodePort, ClusterIP, or LoadBalancer
+  port: 80 # External port for accessing the service
+  targetPort: 80 # Internal port for the pods
+  nodePort: 30001
 
 serviceAccount:
   create: false

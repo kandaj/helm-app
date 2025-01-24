@@ -7,9 +7,12 @@ metadata:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service.type }} # Configurable service type (NodePort, ClusterIP, LoadBalancer)
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
+    - port: {{ .Values.service.port }}             # External port for the service
+      targetPort: {{ .Values.service.targetPort }} # Target port for the pods
+      {{- if eq .Values.service.type "NodePort" }}
+      nodePort: {{ .Values.service.nodePort }}     # Specify NodePort if the service type is NodePort
+      {{- end }}
   selector:
     app: {{ .Release.Name }}
