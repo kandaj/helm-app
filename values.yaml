@@ -1,0 +1,16 @@
+replicaCount: 2
+
+image:
+  repository: <your-dockerhub-username>/frontend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  hostname: frontend.local
+  annotations: {}
+  tls: []
