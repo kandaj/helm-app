@@ -14,7 +14,7 @@ serviceAccount:
   name: ""
 
 ingress:
-  enabled: true
+  enabled: false
   hostname: frontend-app.local
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
