@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: jagkandasamy/frontend
-  tag: 510b6f7
+  tag: 2ec9ee4
   pullPolicy: Always
 
 service:
