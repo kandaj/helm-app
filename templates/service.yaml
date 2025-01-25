@@ -1,18 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-service
-  namespace: {{ .Release.Namespace }}
+  name: {{ .Values.service.name }}
   labels:
-    app: {{ .Chart.Name }}
-    release: {{ .Release.Name }}
+    app: {{ .Values.app.name }}
 spec:
-  type: {{ .Values.service.type }} # Configurable service type (NodePort, ClusterIP, LoadBalancer)
+  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}             # External port for the service
-      targetPort: {{ .Values.service.targetPort }} # Target port for the pods
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort | default .Values.service.port }}
       {{- if eq .Values.service.type "NodePort" }}
-      nodePort: {{ .Values.service.nodePort }}     # Specify NodePort if the service type is NodePort
+      nodePort: {{ .Values.service.nodePort | default 30001 }}
       {{- end }}
   selector:
-    app: {{ .Release.Name }}
+    app: {{ .Values.app.name }}
