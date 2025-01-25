@@ -7,6 +7,14 @@ image:
   tag: 08b3736
   pullPolicy: Always
 
+service:
+  name: frontend-app-service
+  type: NodePort
+  enabled: false
+  port: 8080
+  targetPort: 80
+  nodePort: 30001
+
 serviceAccount:
   create: false
   name: ""
