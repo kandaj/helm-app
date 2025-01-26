@@ -10,7 +10,7 @@ image:
 service:
   name: frontend-app-service
   type: NodePort
-  enabled: false
+  enabled: true
   port: 80
   targetPort: 80
   nodePort: 30001
