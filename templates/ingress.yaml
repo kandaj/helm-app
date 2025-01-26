@@ -2,27 +2,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-frontend
+  name: {{ .Values.ingress.name | default "frontend-app-ingress" }}
+  namespace: {{ .Release.Namespace }}
   annotations:
-    {{- range $key, $value := .Values.ingress.annotations }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+    nginx.ingress.kubernetes.io/rewrite-target: {{ .Values.ingress.annotations.rewriteTarget | default "/" }}
 spec:
   rules:
-  - host: {{ .Values.ingress.hostname }}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ .Release.Name }}-frontend
-            port:
-              number: {{ .Values.service.port }}
-  {{- if .Values.ingress.tls }}
-  tls:
-  - hosts:
-      - {{ .Values.ingress.hostname }}
-    secretName: {{ .Release.Name }}-tls
-  {{- end }}
+    - host: {{ .Values.ingress.host | default "frontend-app.local" }}
+      http:
+        paths:
+          - path: {{ .Values.ingress.path | default "/" }}
+            pathType: {{ .Values.ingress.pathType | default "Prefix" }}
+            backend:
+              service:
+                name: {{ .Values.service.name | default "frontend-app-service" }}
+                port:
+                  number: {{ .Values.service.port | default 80 }}
 {{- end }}
